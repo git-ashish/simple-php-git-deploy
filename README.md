@@ -14,6 +14,13 @@ _Automatically deploy the code using PHP and Git._
 * If the Git repo you wish to deploy is private, the system user running PHP
   also needs to have the right SSH keys to access the remote repository.
 
+
+## SSH Setup for Amazon Linux AMI
+
+* The default user for httpd is ``apache`` and the home folder for it is ``/var/www``. The .ssh folder must be created in this home directory and keys should be stored here. You should copy the public key contents to BitBucket/Github.
+* Only for first time, sudo -u apache git clone repo.git should be run so that the BitBucket server is added in the `apache` user's know_host file. After this, the hook that will be setup can take care of everything.
+ 
+
 ## Usage
 
  * Configure the script and put it somewhere that's accessible from the
@@ -67,6 +74,7 @@ For more info, read the source of `deploy.php`.
 
 ## Tips'n'Tricks
 
+ * The `TARGET_DIR` and `TMP_DIR` should be owned by `apache` user. It can be done by `chown -R apache:www TARGET_DIR` and    `chmod -R g+s TARGET_DIR`. Same should be done for `TMP_DIR`.
  * Because `rsync` is used for deployment, the `TARGET_DIR` doesn't have to be
    on the same server that the script is running e.g. `define('TARGET_DIR',
    'username@example.com:/full/path/to/target_dir/');` is going to work as long
