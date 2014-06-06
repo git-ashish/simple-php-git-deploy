@@ -19,7 +19,13 @@ _Automatically deploy the code using PHP and Git._
 
 * The default user for httpd is ``apache`` and the home folder for it is ``/var/www``. The .ssh folder must be created in this home directory and keys should be stored here. You should copy the public key contents to BitBucket/Github.
 * Only for first time, sudo -u apache git clone repo.git should be run so that the BitBucket server is added in the `apache` user's know_host file. After this, the hook that will be setup can take care of everything.
- 
+
+
+## Amazon Linux AMI 
+
+* The application code should be in a sub-folder inside the `/var/www/html/`. Lets name it `my-web-app`. The path should then be `/var/www/html/my-web-app/`
+* As the deploy files ( `deploy-config.php` and `deploy.php`) should be publicaly accessible for BitBucket hook to work, lets keep it inside `/var/www/html/deploy/`
+* For hook, the url can be like `deploy.my-web-app.com/deploy.php?sat=xxxxx` and this will be redirected to `/var/www/html/deploy/` using the vhost ( /etc/httpd/conf/httpd-vhosts.cnf ).
 
 ## Usage
 
